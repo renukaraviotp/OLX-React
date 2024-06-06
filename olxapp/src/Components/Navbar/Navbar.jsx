@@ -1,48 +1,36 @@
-import React from "react";
+// Navbar.js
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import './Navbar.css'; // Create and style your CSS file
 
-
-function Header() {
+const Navbar = () => {
+    const [isOpen, setIsOpen] = useState(false);
+  
+    const toggleNavbar = () => {
+      setIsOpen(!isOpen);
+    };
+  
     return (
-      <div className="headerParentDiv">
-        <div className="headerChildDiv">
-          <div className="brandName">
-            <OlxLogo></OlxLogo>
-          </div>
-          <div className="placeSearch">
-            <Search></Search>
-            <input type="text" />
-            <Arrow></Arrow>
-          </div>
-          <div className="productSearch">
-            <div className="input">
-              <input
-                type="text"
-                placeholder="Find car,mobile phone and more..."
-              />
-            </div>
-            <div className="searchAction">
-              <Search color="#ffffff"></Search>
-            </div>
-          </div>
-          <div className="language">
-            <span> ENGLISH </span>
-            <Arrow></Arrow>
-          </div>
-          <div className="loginPage">
-            <span>Login</span>
-            <hr />
-          </div>
-  
-          <div className="sellMenu">
-            <SellButton></SellButton>
-            <div className="sellMenuContent">
-              <SellButtonPlus></SellButtonPlus>
-              <span>SELL</span>
-            </div>
-          </div>
+      <nav className="navbar">
+        <div className="navbar-logo">
+          <Link to="/">OLX</Link>
         </div>
-      </div>
+        <div className={`navbar-links ${isOpen ? 'open' : ''}`}>
+          <ul>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/categories">Categories</Link></li>
+            <li><Link to="/post-ad">Post Ad</Link></li>
+            <li><Link to="/account">My Account</Link></li>
+            <li><Link to="/login">Login</Link></li>
+          </ul>
+        </div>
+        <div className="hamburger" onClick={toggleNavbar}>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </nav>
     );
-  }
-  
-  export default Header;
+  };
+
+export default Navbar;
