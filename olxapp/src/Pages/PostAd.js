@@ -1,6 +1,6 @@
 import React from 'react';
 
 const PostAd = () => {
-  return <div>Post Ad Page</div>;
+  return <div>Sell Your Products</div>;
 };
 export default PostAd;

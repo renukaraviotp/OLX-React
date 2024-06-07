@@ -5,13 +5,12 @@ import land from './land.jpeg';
 const Home = () => {
     const containerStyle = {
         margin: 0,
+        marginTop:-7,
         padding: 0,
         position: 'relative',
         width: '100%',
-        height: '100vh', // Ensures the container takes the full viewport height
-        display: 'flex',
-        justifyContent: 'center', // Centers the image horizontally
-        alignItems: 'flex-start', // Aligns the image to the top
+        height: '100vh', 
+        justifyContent: 'center', 
         boxSizing: 'border-box',
       };
     
@@ -21,8 +20,9 @@ const Home = () => {
         display: 'block',
       };
   return (
-    <div style={containerStyle}>
+    <div style={containerStyle}> <br></br>
       <img src={land} alt="land" style={imageStyle} />
+      
     </div>
   );
 };

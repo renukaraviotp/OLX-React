@@ -1,101 +1,138 @@
 /* Navbar.css */
 body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Ensure the navbar stays on top of other content */
+}
+
+.navbar-logo a {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #ff6f61;
+  text-decoration: none;
+}
+
+.navbar-search {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  margin-left: 20px;
+}
+
+.navbar-search input {
+  flex-grow: 1;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-right: 10px;
+  width: 500px;
+  height: 50px;
+}
+
+.navbar-search button {
+  padding: 5px 10px;
+  font-size: 0.9em;
+  background-color: #ff6f61;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  width: 100px;
+}
+
+.navbar-search button:hover {
+  background-color: #e55b50;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-links ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li {
+  margin-left: 20px;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: #333;
+  font-size: 1em;
+}
+
+.navbar-links a:hover {
+  color: #ff6f61;
+}
+
+/* Styles for the hamburger menu icon */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  margin: 4px;
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+  .navbar-search {
+    display: none;
   }
-  
-  .navbar {
-    position: fixed;
-    top: 0;
-    /* width: 100%; */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #f8f9fa;
-    padding: 10px 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 1000; /* Ensure the navbar stays on top of other content */
-  }
-  
-  .navbar-logo a {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #ff6f61;
-    text-decoration: none;
-  }
-  
+
   .navbar-links {
-    display: flex;
-    align-items: center;
-  }
-  
-  .navbar-links ul {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .navbar-links li {
-    margin-left: 20px;
-  }
-  
-  .navbar-links a {
-    text-decoration: none;
-    color: #333;
-    font-size: 1em;
-  }
-  
-  .navbar-links a:hover {
-    color: #ff6f61;
-  }
-  
-  /* Styles for the hamburger menu icon */
-  .hamburger {
     display: none;
     flex-direction: column;
-    cursor: pointer;
+    width: 100%;
+    background-color: #f8f9fa;
   }
-  
-  .hamburger div {
-    width: 25px;
-    height: 3px;
-    background-color: #333;
-    margin: 4px;
+
+  .navbar-links ul {
+    flex-direction: column;
+    width: 100%;
   }
-  
-  /* Media query for mobile devices */
-  @media (max-width: 768px) {
-    .navbar-links {
-      display: none;
-      flex-direction: column;
-      width: 100%;
-      background-color: #f8f9fa;
-    }
-  
-    .navbar-links ul {
-      flex-direction: column;
-      width: 100%;
-    }
-  
-    .navbar-links li {
-      margin: 10px 0;
-      text-align: center;
-    }
-  
-    .hamburger {
-      display: flex;
-    }
+
+  .navbar-links li {
+    margin: 10px 0;
+    text-align: center;
   }
-  
-  /* Add padding to the top of the main content to prevent it from being hidden under the navbar */
-  main {
-    padding-top: 60px; /* Adjust this value to match the height of the navbar */
-  }
-  
-  /* Toggle the navbar links when the hamburger menu is clicked */
-  .navbar-links.open {
+
+  .hamburger {
     display: flex;
   }
-  
+}
+
+/* Add padding to the top of the main content to prevent it from being hidden under the navbar */
+main {
+  padding-top: 60px; /* Adjust this value to match the height of the navbar */
+}
+
+/* Toggle the navbar links when the hamburger menu is clicked */
+.navbar-links.open {
+  display: flex;
+}

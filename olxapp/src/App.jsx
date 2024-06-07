@@ -8,8 +8,6 @@ import Categories from './Pages/Categories';
 import PostAd from './Pages/PostAd';
 import Account from './Pages/Account';
 
-
-
 const App = () => {
   return (
     <Router>
@@ -26,5 +24,6 @@ const App = () => {
     </Router>
   );
 };
+
 
 export default App;
