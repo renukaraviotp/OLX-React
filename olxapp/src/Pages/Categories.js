@@ -4,6 +4,17 @@ import Arrow from './Arrow';
 import './Categories.css';
 
 function Banner() {
+  const footerStyle = {
+    marginTop: '100px',
+    backgroundColor: '#333',
+    color: 'white',
+    textAlign: 'center',
+    padding: '20px',
+};
+
+const footerTextStyle = {
+    margin: 0,
+};
   return (
     <div className="bannerParentDiv">
       <div className="bannerChildDiv">
@@ -28,7 +39,12 @@ function Banner() {
             alt=""
           />
         </div>
-      </div>
+      </div><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+      <footer style={footerStyle}>
+                <div>
+                    <p style={footerTextStyle}>&copy; 2024 Created by Renuka. All rights reserved.</p>
+                </div>
+      </footer>
       
     </div>
   );
