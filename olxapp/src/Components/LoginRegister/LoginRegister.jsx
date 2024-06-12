@@ -78,6 +78,10 @@ const LoginRegister = () => {
                             <FaUser className="icon" />
                         </div>
                         <div className="input-box">
+                            <input type="text" name="name" placeholder="Username" required onChange={handleChange} />
+                            <FaUser className="icon" />
+                        </div>
+                        <div className="input-box">
                             <input type="email" name="email" placeholder="Email" required onChange={handleChange} />
                             <FaEnvelope className="icon" />
                         </div>
@@ -93,7 +97,6 @@ const LoginRegister = () => {
                             <select name="country" onChange={handleChange}>
                                 <option value="Select Country">Select Country</option>
                                 <option value="India">India</option>
-                                <option value="Other">Other</option>
                             </select>
                             <FaLocationArrow className="icon" />
                         </div>
