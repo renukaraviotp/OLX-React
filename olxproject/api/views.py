@@ -17,28 +17,15 @@ def register_user(request):
     if request.method == 'POST':
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            user=Register.objects.create_user(
+                name=request.data.get('name'),
+                phone=request.data.get('phone'),
+                email=request.data.get('email'),
+                address=request.data.get('address'),
+                country=request.data.get('country'),
+                state=request.data.get('state'),
+                district=request.data.get('district'),
+                )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['POST'])
-def user_login(request):
-    if request.method == 'POST':
-        username = request.data.get('username')
-        password = request.data.get('password')
-
-        user = None
-        if '@' in username:
-            try:
-                user = CustomUser.objects.get(email=username)
-            except ObjectDoesNotExist:
-                pass
-
-        if not user:
-            user = authenticate(username=username, password=password)
-
-        if user:
-            token, _ = Token.objects.get_or_create(user=user)
-            return Response({'token': token.key}, status=status.HTTP_200_OK)
-
-        return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)

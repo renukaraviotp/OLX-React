@@ -71,7 +71,7 @@ const LoginRegister = () => {
                 </div>
 
                 <div className="form-box register">
-                    <form onSubmit={handleRegister}>
+                    <form onSubmit={handleRegister}><br /><br /><br /><br />
                         <h1>Register</h1>
                         <div className="input-box">
                             <input type="text" name="name" placeholder="Name" required onChange={handleChange} />
@@ -168,6 +168,7 @@ const LoginRegister = () => {
                         <div className="register-link">
                             <p>Already have an account? <a href="" onClick={loginLink}>Login</a></p>
                         </div>
+                        <br /><br /><br /><br />
                     </form>
                 </div>
             </div>
