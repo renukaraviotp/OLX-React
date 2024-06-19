@@ -7,6 +7,7 @@ import Home from './Pages/Home';
 import Categories from './Pages/Categories';
 import PostAd from './Pages/PostAd';
 import Account from './Pages/Account';
+import ProductDetails from './Pages/ProductDetails';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/post-ad" element={<PostAd />} />
           <Route path="/account" element={<Account />} />
           <Route path="/login" element={<LoginRegister />} />
+          <Route path="/product/:productId" component={ProductDetails} />
         </Routes>
       </main>
     </Router>
