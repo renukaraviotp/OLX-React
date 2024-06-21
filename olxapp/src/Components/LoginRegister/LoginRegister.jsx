@@ -4,11 +4,13 @@ import './LoginRegister.css';
 import { FaUser, FaLock, FaEnvelope, FaMobile, FaAddressBook, FaLocationArrow } from "react-icons/fa";
 
 const LoginRegister = () => {
-    const [action, setAction] = useState('');
+    const [action, setAction] = useState(''); // 'active' for registration form display
     const [formData, setFormData] = useState({
+        username: '',
+        password: '',
         name: '',
-        phone: '',
         email: '',
+        phone: '',
         address: '',
         country: '',
         state: '',
@@ -38,14 +40,26 @@ const LoginRegister = () => {
         try {
             const response = await axios.post('http://localhost:8000/api/register/', formData);
             console.log(response.data);
+            alert("Registration successful!");
         } catch (error) {
             console.error(error);
+            alert("Registration failed.");
         }
     };
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        // Handle login logic here
+        try {
+            const response = await axios.post('http://localhost:8000/api/login/', {
+                username: formData.username,
+                password: formData.password,
+            });
+            console.log(response.data);
+            alert("Login successful!");
+        } catch (error) {
+            console.error(error);
+            alert("Login failed.");
+        }
     };
 
     return (
@@ -71,14 +85,14 @@ const LoginRegister = () => {
                 </div>
 
                 <div className="form-box register">
-                    <form onSubmit={handleRegister}><br /><br /><br /><br />
+                    <form onSubmit={handleRegister}>
                         <h1>Register</h1>
                         <div className="input-box">
-                            <input type="text" name="name" placeholder="Name" required onChange={handleChange} />
+                            <input type="text" name="name" placeholder="Full Name" required onChange={handleChange} />
                             <FaUser className="icon" />
                         </div>
                         <div className="input-box">
-                            <input type="text" name="name" placeholder="Username" required onChange={handleChange} />
+                            <input type="text" name="username" placeholder="Username" required onChange={handleChange} />
                             <FaUser className="icon" />
                         </div>
                         <div className="input-box">
@@ -97,6 +111,7 @@ const LoginRegister = () => {
                             <select name="country" onChange={handleChange}>
                                 <option value="Select Country">Select Country</option>
                                 <option value="India">India</option>
+                                {/* Add more options as needed */}
                             </select>
                             <FaLocationArrow className="icon" />
                         </div>
@@ -168,7 +183,6 @@ const LoginRegister = () => {
                         <div className="register-link">
                             <p>Already have an account? <a href="" onClick={loginLink}>Login</a></p>
                         </div>
-                        <br /><br /><br /><br />
                     </form>
                 </div>
             </div>
