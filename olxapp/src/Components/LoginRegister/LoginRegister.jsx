@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 import './LoginRegister.css';
 import { FaUser, FaLock, FaEnvelope, FaMobile, FaAddressBook, FaLocationArrow } from "react-icons/fa";
 
 const LoginRegister = () => {
-    const [action, setAction] = useState(''); // 'active' for registration form display
+    const [action, setAction] = useState('');
     const [formData, setFormData] = useState({
         username: '',
         password: '',
-        name: '',
+        first_name: '',
         email: '',
         phone: '',
         address: '',
@@ -16,6 +17,7 @@ const LoginRegister = () => {
         state: '',
         district: ''
     });
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -41,9 +43,10 @@ const LoginRegister = () => {
             const response = await axios.post('http://localhost:8000/api/register/', formData);
             console.log(response.data);
             alert("Registration successful!");
+            navigate('/account'); // Redirect to login page after successful registration
         } catch (error) {
             console.error(error);
-            alert("Registration failed.");
+            alert("Registration failed: " + (error.response?.data?.detail || error.message));
         }
     };
 
@@ -56,9 +59,10 @@ const LoginRegister = () => {
             });
             console.log(response.data);
             alert("Login successful!");
+            navigate('/'); // Redirect to home page after successful login
         } catch (error) {
             console.error(error);
-            alert("Login failed.");
+            alert("Login failed: " + (error.response?.data?.detail || error.message));
         }
     };
 
@@ -85,10 +89,11 @@ const LoginRegister = () => {
                 </div>
 
                 <div className="form-box register">
+                    <br /><br />
                     <form onSubmit={handleRegister}>
                         <h1>Register</h1>
                         <div className="input-box">
-                            <input type="text" name="name" placeholder="Full Name" required onChange={handleChange} />
+                            <input type="text" name="first_name" placeholder="Full Name" required onChange={handleChange} />
                             <FaUser className="icon" />
                         </div>
                         <div className="input-box">
@@ -100,7 +105,11 @@ const LoginRegister = () => {
                             <FaEnvelope className="icon" />
                         </div>
                         <div className="input-box">
-                            <input type="text" name="phone" placeholder="Mobile Number" required onChange={handleChange} />
+                            <input type="password" name="password" placeholder="Password" required onChange={handleChange} />
+                            <FaLock className="icon" />
+                        </div>
+                        <div className="input-box">
+                            <input type="text" name="phone" placeholder="Mobile Number" onChange={handleChange} />
                             <FaMobile className="icon" />
                         </div>
                         <div className="input-box">
@@ -109,7 +118,7 @@ const LoginRegister = () => {
                         </div>
                         <div className="input-box">
                             <select name="country" onChange={handleChange}>
-                                <option value="Select Country">Select Country</option>
+                                <option value="">Select Country</option>
                                 <option value="India">India</option>
                                 {/* Add more options as needed */}
                             </select>
@@ -117,7 +126,7 @@ const LoginRegister = () => {
                         </div>
                         <div className="input-box">
                             <select name="state" onChange={handleChange}>
-                                <option value="Select State">Select State</option>
+                                <option value="">Select State</option>
                                 <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
                                 <option value="Andhra Pradesh">Andhra Pradesh</option>
                                 <option value="Arunachal Pradesh">Arunachal Pradesh</option>
@@ -161,7 +170,7 @@ const LoginRegister = () => {
                         </div>
                         <div className="input-box">
                             <select name="district" onChange={handleChange}>
-                                <option value="Select District">Select District</option>
+                                <option value="">Select District</option>
                                 <option value="Kasargod">Kasargod</option>
                                 <option value="Kannur">Kannur</option>
                                 <option value="Wayanad">Wayanad</option>
@@ -184,6 +193,7 @@ const LoginRegister = () => {
                             <p>Already have an account? <a href="" onClick={loginLink}>Login</a></p>
                         </div>
                     </form>
+                    <br /><br /><br />
                 </div>
             </div>
             <br /><br />

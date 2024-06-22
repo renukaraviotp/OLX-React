@@ -11,10 +11,21 @@ class RegisterView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = RegisterSerializer
 
+    def create(self, request, *args, **kwargs):
+        print("Incoming registration data:", request.data)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response({
+            "user": UserSerializer(user).data,
+            "message": "User registered successfully."
+        }, status=status.HTTP_201_CREATED)
+
 class LoginView(generics.GenericAPIView):
     serializer_class = LoginSerializer
 
     def post(self, request, *args, **kwargs):
+        print("Incoming login data:", request.data)
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = authenticate(username=serializer.validated_data['username'], password=serializer.validated_data['password'])

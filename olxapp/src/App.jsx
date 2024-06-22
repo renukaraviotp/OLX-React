@@ -1,7 +1,7 @@
 import React from 'react';
 import LoginRegister from './Components/LoginRegister/LoginRegister';
 import './App.css'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes,Navigate } from 'react-router-dom';
 import Navbar from './Components/Navbar/Navbar';
 import Home from './Pages/Home';
 import Categories from './Pages/Categories';
@@ -21,6 +21,8 @@ const App = () => {
           <Route path="/account" element={<Account />} />
           <Route path="/login" element={<LoginRegister />} />
           <Route path="/product/:productId" component={ProductDetails} />
+          <Route path="/" element={<Navigate replace to="/login" />} />
+          
         </Routes>
       </main>
     </Router>
