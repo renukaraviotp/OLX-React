@@ -1,11 +1,13 @@
-// Navbar.js
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import './Navbar.css'; // Create and style your CSS file
+import React, { useState, useContext, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import './Navbar.css';
+import { AuthContext } from '../../context/AuthContext';
 
 const Navbar = () => {
+  const { isAuthenticated, logout } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
@@ -17,9 +19,17 @@ const Navbar = () => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    // Handle the search logic here, e.g., redirect to a search results page
     console.log('Search query:', searchQuery);
   };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
+  useEffect(() => {
+    // Force a re-render when authentication state changes
+  }, [isAuthenticated]);
 
   return (
     <nav className="navbar">
@@ -37,11 +47,15 @@ const Navbar = () => {
       </form>
       <div className={`navbar-links ${isOpen ? 'open' : ''}`}>
         <ul>
-          <li><Link to="/">Home</Link></li>
+        <li><Link to="/">Home</Link></li>
           <li><Link to="/categories">Categories</Link></li>
           <li><Link to="/post-ad">Sell</Link></li>
           <li><Link to="/account">My Account</Link></li>
-          <li><Link to="/login">Login</Link></li>
+          {isAuthenticated ? (
+            <li><a href="#" onClick={handleLogout}>Logout</a></li>
+          ) : (
+            <li><Link to="/login">Login</Link></li>
+          )}
         </ul>
       </div>
       <div className="hamburger" onClick={toggleNavbar}>
