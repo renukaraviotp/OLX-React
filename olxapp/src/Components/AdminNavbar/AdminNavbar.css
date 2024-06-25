@@ -1,0 +1,28 @@
+.admin-navbar {
+    background-color: #333;
+    padding: 10px;
+  }
+  
+  .admin-navbar .navbar-logo {
+    display: inline-block;
+  }
+  
+  .admin-navbar .navbar-links ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .admin-navbar .navbar-links ul li {
+    display: inline;
+    margin-right: 20px;
+  }
+  
+  .admin-navbar .navbar-links ul li a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .admin-navbar .navbar-links ul li a:hover {
+    text-decoration: underline;
+  }
+  

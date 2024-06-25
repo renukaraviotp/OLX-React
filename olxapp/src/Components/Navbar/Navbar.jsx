@@ -2,9 +2,10 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import { AuthContext } from '../../context/AuthContext';
+import AdminNavbar from '../AdminNavbar/AdminNavbar';
 
 const Navbar = () => {
-  const { isAuthenticated, logout } = useContext(AuthContext);
+  const { isAuthenticated, logout,isAdmin } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
@@ -52,8 +53,13 @@ const Navbar = () => {
           <li><Link to="/post-ad">Sell</Link></li>
           <li><Link to="/account">My Account</Link></li>
           {isAuthenticated ? (
-            <li><a href="#" onClick={handleLogout}>Logout</a></li>
-          ) : (
+            <>
+              {isAdmin ? (
+                <AdminNavbar /> // Render admin navbar if isAdmin is true
+              ) : null}
+              <li><a href="#" onClick={handleLogout}>Logout</a></li>
+            </>
+          ) :  (
             <li><Link to="/login">Login</Link></li>
           )}
         </ul>

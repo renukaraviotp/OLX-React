@@ -9,6 +9,8 @@ import Categories from './Pages/Categories';
 import PostAd from './Pages/PostAd';
 import Account from './Pages/Account';
 import ProductDetails from './Pages/ProductDetails';
+import AdminDashboard from './Components/AdminDashboard/AdminDashboard';
+import AdminNavbar from './Components/AdminNavbar/AdminNavbar';
 
 const App = () => {
   return (
@@ -23,6 +25,7 @@ const App = () => {
           <Route path="/login" element={<LoginRegister />} />
           <Route path="/product/:productId" component={ProductDetails} />
           <Route path="/" element={<Navigate replace to="/home" />} />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
         </Routes>
       </Router>
     </AuthProvider>

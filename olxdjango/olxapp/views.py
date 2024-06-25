@@ -31,8 +31,13 @@ class LoginView(generics.GenericAPIView):
         user = authenticate(username=serializer.validated_data['username'], password=serializer.validated_data['password'])
         if user is not None:
             refresh = RefreshToken.for_user(user)
-            return Response({
+            token_data = {
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
-            })
+            }
+            if user.is_superuser:
+                token_data['message'] = 'Admin login successful'
+            else:
+                token_data['message'] = 'User login successful'
+            return Response(token_data)
         return Response({"detail": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)

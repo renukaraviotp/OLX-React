@@ -55,14 +55,15 @@ const LoginRegister = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8000/api/login/', {
-        username: formData.username,
-        password: formData.password,
-      });
+      const response = await axios.post('http://localhost:8000/api/login/', formData);
       console.log(response.data);
       login(response.data.access); // Use login method from AuthContext
-      alert("Login successful!");
-      navigate('/'); // Redirect to home page after successful login
+      alert(response.data.message);
+      if (response.data.message.includes('Admin')) {
+        navigate('/admin-dashboard'); // Redirect to admin dashboard
+      } else {
+        navigate('/'); // Redirect to home page after successful login
+      }
     } catch (error) {
       console.error(error);
       alert("Login failed: " + (error.response?.data?.detail || error.message));
