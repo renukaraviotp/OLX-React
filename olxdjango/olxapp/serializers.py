@@ -1,19 +1,25 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+import random
+import string
+from django.core.mail import send_mail
+from .models import CustomUser
 
 CustomUser = get_user_model()
 
 class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
-    
     class Meta:
         model = CustomUser
-        fields = ['username', 'password', 'email', 'first_name', 'phone', 'address', 'country', 'state', 'district']
+        fields = ['username', 'email', 'first_name', 'phone', 'address', 'country', 'state', 'district']
 
     def create(self, validated_data):
+        # Generate a random 6-digit number as the password
+        password = ''.join(random.choices(string.digits, k=6))
+        
+        # Create the user
         user = CustomUser.objects.create_user(
             username=validated_data['username'],
-            password=validated_data['password'],
+            password=password,
             email=validated_data['email'],
             first_name=validated_data.get('first_name', ''),
             phone=validated_data.get('phone', ''),
@@ -22,6 +28,16 @@ class RegisterSerializer(serializers.ModelSerializer):
             state=validated_data.get('state', ''),
             district=validated_data.get('district', '')
         )
+
+        # Send confirmation email
+        send_mail(
+            'Registration Confirmation',
+            f'Your registration is successful. Your password is {password}.',
+            'renukat882@gmail.com',  # Replace with your email
+            [validated_data['email']],
+            fail_silently=False,
+        )
+
         return user
 
 class LoginSerializer(serializers.Serializer):

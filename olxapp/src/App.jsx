@@ -10,6 +10,7 @@ import PostAd from './Pages/PostAd';
 import Account from './Pages/Account';
 import ProductDetails from './Pages/ProductDetails';
 import AdminDashboard from './Components/AdminDashboard/AdminDashboard';
+import AdminUserList from './Components/AdminUserList/AdminUserList';
 import AdminNavbar from './Components/AdminNavbar/AdminNavbar';
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="/product/:productId" component={ProductDetails} />
           <Route path="/" element={<Navigate replace to="/home" />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/admin-customers" element={<AdminUserList />} />
         </Routes>
       </Router>
     </AuthProvider>

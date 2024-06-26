@@ -2,22 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './AdminNavbar.css';
 
-const AdminNavbar = () => {
+const AdminSidebar = () => {
   return (
-    <nav className="admin-navbar">
-      <div className="navbar-logo">
+    <div className="admin-sidebar">
+      <div className="sidebar-logo">
         <Link to="/admin-dashboard">Admin Dashboard</Link>
       </div>
-      <div className="navbar-links">
-        <ul>
-          <li><Link to="/admin-dashboard">Dashboard</Link></li>
-          <li><Link to="/admin-products">Manage Products</Link></li>
-          <li><Link to="/admin-customers">Manage Customers</Link></li>
-          <li><Link to="/admin-orders">Manage Orders</Link></li>
-        </ul>
-      </div>
-    </nav>
+      <ul>
+        <br /><br />
+        <li><Link to="/admin-dashboard">Dashboard</Link></li> <br />
+        <li><Link to="/admin-products"> Products</Link></li> <br />
+        <li><Link to="/admin-customers"> Customers</Link></li> <br />
+        <li><Link to="/admin-orders"> Orders</Link></li>
+      </ul>
+    </div>
   );
 };
 
-export default AdminNavbar;
+export default AdminSidebar;

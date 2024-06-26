@@ -1,11 +1,10 @@
-# myapp/views.py
-
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from .serializers import RegisterSerializer, LoginSerializer, UserSerializer
 from .models import CustomUser
+from rest_framework import generics, permissions
 
 class RegisterView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
@@ -41,3 +40,9 @@ class LoginView(generics.GenericAPIView):
                 token_data['message'] = 'User login successful'
             return Response(token_data)
         return Response({"detail": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class UserListView(generics.ListAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAdminUser]
