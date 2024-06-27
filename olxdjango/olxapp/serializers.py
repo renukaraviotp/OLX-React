@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 import random
 import string
 from django.core.mail import send_mail
-from .models import CustomUser
+from .models import *
 
 CustomUser = get_user_model()
 
@@ -47,4 +47,9 @@ class LoginSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'first_name', 'phone', 'address', 'country', 'state', 'district']
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'phone', 'address', 'country', 'state', 'district']
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['id', 'name', 'description', 'price', 'stock']

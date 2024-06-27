@@ -14,12 +14,12 @@ const AdminDashboard = () => {
     const fetchData = async () => {
       try {
         const productsResponse = await axios.get('http://localhost:8000/api/products/');
-        const customersResponse = await axios.get('http://localhost:8000/admin/users/'); // Assuming this endpoint provides user count
+        const customersResponse = await axios.get('http://localhost:8000/api/customers/');
         const ordersResponse = await axios.get('http://localhost:8000/api/orders/');
         
         setData({
           totalProducts: productsResponse.data.length,
-          totalCustomers: customersResponse.data.length, // Update based on actual response structure
+          totalCustomers: customersResponse.data.length,
           totalOrders: ordersResponse.data.length,
         });
       } catch (error) {

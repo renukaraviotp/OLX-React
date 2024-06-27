@@ -2,9 +2,12 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
-from .serializers import RegisterSerializer, LoginSerializer, UserSerializer
-from .models import CustomUser
-from rest_framework import generics, permissions
+from .serializers import RegisterSerializer, LoginSerializer, UserSerializer,ProductSerializer
+from .models import *
+from rest_framework import generics, permissions,viewsets
+from django.contrib.auth import get_user_model
+
+CustomUser = get_user_model()
 
 class RegisterView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
@@ -44,5 +47,10 @@ class LoginView(generics.GenericAPIView):
 
 class UserListView(generics.ListAPIView):
     queryset = CustomUser.objects.all()
+    print(queryset)
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAdminUser]
+    
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer

@@ -1,66 +1,66 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import styles from './AdminUserList.module.css'; // Assuming you have CSS modules set up
 import AdminNavbar from '../AdminNavbar/AdminNavbar';
+import styles from './AdminUserList.module.css'; // Import CSS module
 
-const AdminUserList = () => {
-  const [users, setUsers] = useState([]);
+const AdminCustomers = () => {
+  const [customers, setCustomers] = useState([]);
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchCustomers = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/admin/users/', {
+        const token = localStorage.getItem('authToken');
+        const response = await axios.get('http://localhost:8000/api/customers/', {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}` // Replace with your token management method
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
-        setUsers(response.data); // Assuming response.data is an array of users
+        setCustomers(response.data);
       } catch (error) {
-        console.error('Error fetching users:', error);
+        console.error('Error fetching customers:', error);
       }
     };
+    
 
-    fetchUsers();
+    fetchCustomers();
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div className={styles['admin-customers-page']}>
       <AdminNavbar />
-      <h1>Registered Users</h1>
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Full Name</th>
-            <th>Phone</th>
-            <th>Address</th>
-            <th>Country</th>
-            <th>State</th>
-            <th>District</th>
-            <th>Is Admin</th>
-            <th>Is Active</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map(user => (
-            <tr key={user.id}>
-              <td>{user.username}</td>
-              <td>{user.email}</td>
-              <td>{user.first_name}</td>
-              <td>{user.phone}</td>
-              <td>{user.address}</td>
-              <td>{user.country}</td>
-              <td>{user.state}</td>
-              <td>{user.district}</td>
-              <td>{user.is_staff ? 'Yes' : 'No'}</td>
-              <td>{user.is_active ? 'Yes' : 'No'}</td>
+      <div className={styles['admin-customers']}>
+        <h1 className='head1'> Customers</h1>
+        <table className={styles['customers-table']}>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Address</th>
+              <th>Country</th>
+              <th>State</th>
+              <th>District</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {customers.map((customer) => (
+              <tr key={customer.id}>
+                <td>{customer.id}</td>
+                <td>{customer.username}</td>
+                <td>{customer.email}</td>
+                <td>{customer.phone}</td>
+                <td>{customer.address}</td>
+                <td>{customer.country}</td>
+                <td>{customer.state}</td>
+                <td>{customer.district}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
 
-export default AdminUserList;
+export default AdminCustomers;
