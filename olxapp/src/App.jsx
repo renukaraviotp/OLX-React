@@ -12,6 +12,7 @@ import ProductDetails from './Pages/ProductDetails';
 import AdminDashboard from './Components/AdminDashboard/AdminDashboard';
 import AdminNavbar from './Components/AdminNavbar/AdminNavbar';
 import AdminUserList from './Components/AdminUserList/AdminUserList'; 
+import ProductList from './Components/ProductList/AdminUserList'; 
 
 const App = () => {
   return (
@@ -27,7 +28,8 @@ const App = () => {
           <Route path="/product/:productId" element={<ProductDetails />} />
           <Route path="/" element={<Navigate replace to="/home" />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
-          <Route path="/admin-customers" element={<AdminUserList />} /> {/* Add the new route */}
+          <Route path="/admin-customers" element={<AdminUserList />} /> 
+          <Route path="/admin-products" exact component={ProductList} />
         </Routes>
       </Router>
     </AuthProvider>

@@ -51,6 +51,6 @@ class UserListView(generics.ListAPIView):
     serializer_class = UserSerializer
     
 
-class ProductViewSet(viewsets.ModelViewSet):
+class ProductListCreateView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
