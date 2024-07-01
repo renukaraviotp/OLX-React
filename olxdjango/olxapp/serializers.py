@@ -33,7 +33,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         send_mail(
             'Registration Confirmation',
             f'Your registration is successful. Your password is {password}.',
-            'renukat882@gmail.com',  # Replace with your email
+            'renukat882@gmail.com',  
             [validated_data['email']],
             fail_silently=False,
         )
@@ -47,7 +47,7 @@ class LoginSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'phone', 'address', 'country', 'state', 'district']
+        fields = ['id', 'first_name', 'username', 'email', 'phone', 'address', 'country', 'state', 'district']
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:

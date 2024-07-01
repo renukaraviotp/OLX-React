@@ -10,12 +10,14 @@
   flex-grow: 1;
   width: 100%; /* Adjust width as needed */
   max-width: 1000px; /* Maximum width for content */
+
 }
 
 .customers-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  margin-left: 50px;
 }
 
 .customers-table th, .customers-table td {
@@ -38,4 +40,3 @@
 .customers-table tr:hover {
   background-color: #f9f9f9;
 }
-

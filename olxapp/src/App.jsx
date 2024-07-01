@@ -12,7 +12,7 @@ import ProductDetails from './Pages/ProductDetails';
 import AdminDashboard from './Components/AdminDashboard/AdminDashboard';
 import AdminNavbar from './Components/AdminNavbar/AdminNavbar';
 import AdminUserList from './Components/AdminUserList/AdminUserList'; 
-import ProductList from './Components/ProductList/AdminUserList'; 
+import ProductList from './Components/ProductList/ProductList'; 
 
 const App = () => {
   return (

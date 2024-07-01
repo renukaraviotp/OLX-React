@@ -57,7 +57,9 @@ const LoginRegister = () => {
     try {
       const response = await axios.post('http://localhost:8000/api/login/', formData);
       console.log(response.data);
-      login(response.data.access); // Use login method from AuthContext
+      const { access } = response.data;
+      localStorage.setItem('authToken', access); // Store the token in localStorage
+      login(access); // Use login method from AuthContext
       alert(response.data.message);
       if (response.data.message.includes('Admin')) {
         navigate('/admin-dashboard'); // Redirect to admin dashboard

@@ -6,6 +6,7 @@ from .serializers import RegisterSerializer, LoginSerializer, UserSerializer,Pro
 from .models import *
 from rest_framework import generics, permissions,viewsets
 from django.contrib.auth import get_user_model
+import logging
 
 CustomUser = get_user_model()
 
@@ -45,10 +46,18 @@ class LoginView(generics.GenericAPIView):
         return Response({"detail": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
 
 
+logger = logging.getLogger(__name__)
+
 class UserListView(generics.ListAPIView):
-    queryset = CustomUser.objects.all()
-    print(queryset)
     serializer_class = UserSerializer
+
+    def get_queryset(self):
+        # Filter out superusers from the queryset
+        return CustomUser.objects.filter(is_superuser=False)
+
+    def get(self, request, *args, **kwargs):
+        logger.info(f'Authorization Header: {request.headers.get("Authorization")}')
+        return super().get(request, *args, **kwargs)
     
 
 class ProductListCreateView(generics.ListCreateAPIView):
