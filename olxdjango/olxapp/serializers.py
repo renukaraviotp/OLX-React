@@ -49,7 +49,17 @@ class UserSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ['id', 'first_name', 'username', 'email', 'phone', 'address', 'country', 'state', 'district']
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id', 'name']
+
+class SubcategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subcategory
+        fields = ['id', 'category', 'name']
+
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = '__all__'
+        fields = ['id', 'category', 'subcategory', 'name', 'description', 'price']

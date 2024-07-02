@@ -2,7 +2,7 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
-from .serializers import RegisterSerializer, LoginSerializer, UserSerializer,ProductSerializer
+from .serializers import *
 from .models import *
 from rest_framework import generics, permissions,viewsets
 from django.contrib.auth import get_user_model
@@ -60,6 +60,14 @@ class UserListView(generics.ListAPIView):
         return super().get(request, *args, **kwargs)
     
 
-class ProductListCreateView(generics.ListCreateAPIView):
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+class SubcategoryViewSet(viewsets.ModelViewSet):
+    queryset = Subcategory.objects.all()
+    serializer_class = SubcategorySerializer
+
+class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer

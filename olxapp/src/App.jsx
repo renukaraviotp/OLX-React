@@ -13,6 +13,7 @@ import AdminDashboard from './Components/AdminDashboard/AdminDashboard';
 import AdminNavbar from './Components/AdminNavbar/AdminNavbar';
 import AdminUserList from './Components/AdminUserList/AdminUserList'; 
 import ProductList from './Components/ProductList/ProductList'; 
+import CategoryAdd from './Components/CategoryAdd/CategoryAdd';
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/admin-customers" element={<AdminUserList />} /> 
           <Route path="/admin-products" exact component={ProductList} />
+          <Route path="/admin-categories" component={CategoryAdd} />
         </Routes>
       </Router>
     </AuthProvider>
