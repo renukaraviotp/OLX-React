@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import { AuthContext } from '../../context/AuthContext';
-import AdminNavbar from '../AdminNavbar/AdminNavbar'; // Import AdminSidebar
+import AdminNavbar from '../AdminNavbar/AdminNavbar'; 
 
 const Navbar = () => {
   const { isAuthenticated, logout, isAdmin } = useContext(AuthContext);

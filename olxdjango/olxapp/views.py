@@ -7,6 +7,10 @@ from .models import *
 from rest_framework import generics, permissions,viewsets
 from django.contrib.auth import get_user_model
 import logging
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.viewsets import ModelViewSet
 
 CustomUser = get_user_model()
 
@@ -68,6 +72,30 @@ class SubcategoryViewSet(viewsets.ModelViewSet):
     queryset = Subcategory.objects.all()
     serializer_class = SubcategorySerializer
 
-class ProductViewSet(viewsets.ModelViewSet):
+    def list(self, request):
+        category_id = request.query_params.get('category_id')
+        if category_id:
+            queryset = self.queryset.filter(category_id=category_id)
+        else:
+            queryset = self.queryset.all()
+        
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
+    
+class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def perform_update(self, serializer):
+        serializer.save()
+
+    def perform_destroy(self, instance):
+        instance.delete()

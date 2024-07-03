@@ -14,6 +14,7 @@ import AdminNavbar from './Components/AdminNavbar/AdminNavbar';
 import AdminUserList from './Components/AdminUserList/AdminUserList'; 
 import ProductList from './Components/ProductList/ProductList'; 
 import CategoryAdd from './Components/CategoryAdd/CategoryAdd';
+import AddProduct from './Components/AddProduct/AddProduct';
 
 const App = () => {
   return (
@@ -23,7 +24,7 @@ const App = () => {
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/categories" element={<Categories />} />
-          <Route path="/post-ad" element={<PostAd />} />
+          <Route path="/post-ad" element={<AddProduct />} />
           <Route path="/account" element={<Account />} />
           <Route path="/login" element={<LoginRegister />} />
           <Route path="/product/:productId" element={<ProductDetails />} />
