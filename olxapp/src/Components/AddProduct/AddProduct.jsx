@@ -8,7 +8,7 @@ const AddProduct = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    title: '',
+    name: '', // Changed from title to name to match the model field
     description: '',
     price: '',
     category: '',
@@ -66,23 +66,23 @@ const AddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!token) {
       console.error('User not authenticated');
       return;
     }
-  
+
     const form = new FormData();
-    form.append('title', formData.title);
+    form.append('name', formData.name); // Changed from title to name
     form.append('description', formData.description);
     form.append('price', formData.price);
     form.append('category', formData.category);
     form.append('subcategory', formData.subcategory);
-  
+
     for (let file of formData.images) {
       form.append('images', file);
     }
-  
+
     try {
       const response = await fetch('http://localhost:8000/api/products/', {
         method: 'POST',
@@ -91,16 +91,16 @@ const AddProduct = () => {
         },
         body: form,
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to add product');
       }
-  
+
       navigate('/');
     } catch (error) {
       console.error('Error:', error.message);
     }
-  };  
+  };
 
   return (
     <div className="add-product-container">
@@ -111,8 +111,8 @@ const AddProduct = () => {
           Title:
           <input
             type="text"
-            name="title"
-            value={formData.title}
+            name="name" // Changed from title to name
+            value={formData.name}
             onChange={handleChange}
             required
           />

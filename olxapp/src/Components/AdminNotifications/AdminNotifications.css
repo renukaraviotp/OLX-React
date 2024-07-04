@@ -1,0 +1,19 @@
+.admin-notifications {
+    padding: 20px;
+  }
+  
+  .notifications {
+    margin-top: 20px;
+  }
+  
+  .notification-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .message {
+    color: green;
+    margin-bottom: 20px;
+  }
+  

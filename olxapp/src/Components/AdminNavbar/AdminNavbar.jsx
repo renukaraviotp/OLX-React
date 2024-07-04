@@ -13,7 +13,8 @@ const AdminSidebar = () => {
         <li><Link to="/admin-products">Products</Link></li><br />
         <li><Link to="/admin-categories">Categories</Link></li><br />
         <li><Link to="/admin-customers">Customers</Link></li><br />
-        <li><Link to="/admin-orders">Orders</Link></li>
+        <li><Link to="/admin-orders">Orders</Link></li><br />
+        <li><Link to="/admin-notifications">Notifications</Link></li>
       </ul>
     </div>
   );

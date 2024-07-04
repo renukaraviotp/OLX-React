@@ -6,6 +6,8 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from .views import *
+from django.conf import settings
+from django.conf.urls.static import static
 
 router = DefaultRouter()
 router.register(r'categories', CategoryViewSet)
@@ -20,4 +22,4 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/customers/', UserListView.as_view(), name='user-list'),
      path('api/', include(router.urls)),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

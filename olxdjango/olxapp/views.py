@@ -11,6 +11,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.views import APIView
 
 CustomUser = get_user_model()
 
@@ -83,10 +84,11 @@ class SubcategoryViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     
-class ProductViewSet(ModelViewSet):
+class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    
+    permission_classes = [IsAuthenticated]
+
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
@@ -99,3 +101,9 @@ class ProductViewSet(ModelViewSet):
 
     def perform_destroy(self, instance):
         instance.delete()
+        
+class NotificationListView(APIView):
+    def get(self, request):
+        notifications = Notification.objects.all()
+        serializer = NotificationSerializer(notifications, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

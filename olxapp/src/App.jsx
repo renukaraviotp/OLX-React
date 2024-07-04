@@ -10,11 +10,11 @@ import PostAd from './Pages/PostAd';
 import Account from './Pages/Account';
 import ProductDetails from './Pages/ProductDetails';
 import AdminDashboard from './Components/AdminDashboard/AdminDashboard';
-import AdminNavbar from './Components/AdminNavbar/AdminNavbar';
 import AdminUserList from './Components/AdminUserList/AdminUserList'; 
 import ProductList from './Components/ProductList/ProductList'; 
 import CategoryAdd from './Components/CategoryAdd/CategoryAdd';
 import AddProduct from './Components/AddProduct/AddProduct';
+import AdminNotifications from './Components/AdminNotifications/AdminNotifications';
 
 const App = () => {
   return (
@@ -31,8 +31,9 @@ const App = () => {
           <Route path="/" element={<Navigate replace to="/home" />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/admin-customers" element={<AdminUserList />} /> 
-          <Route path="/admin-products" exact component={ProductList} />
-          <Route path="/admin-categories" component={CategoryAdd} />
+          <Route path="/admin-products" element={<ProductList />} />
+          <Route path="/admin-categories" element={<CategoryAdd />} />
+          <Route path="/admin-notifications" element={<AdminNotifications />} />
         </Routes>
       </Router>
     </AuthProvider>
