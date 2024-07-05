@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import AdminNavbar from '../AdminNavbar/AdminNavbar';
+import { AuthContext } from '../../context/AuthContext';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
@@ -17,26 +18,40 @@ const AdminDashboard = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [categories, setCategories] = useState([]);
   const [message, setMessage] = useState('');
+  const [notifications, setNotifications] = useState([]);
+
+  const { token } = useContext(AuthContext); // Get the token from AuthContext
 
   useEffect(() => {
     fetchData();
     fetchCategories();
+    fetchNotifications();
   }, []);
 
   const fetchData = async () => {
     try {
-      const productsResponse = await axios.get('http://localhost:8000/api/products/');
-      const categoriesResponse = await axios.get('http://localhost:8000/api/categories/');
-      const subcategoriesResponse = await axios.get('http://localhost:8000/api/subcategories/');
-      const customersResponse = await axios.get('http://localhost:8000/api/customers/');
-      const ordersResponse = await axios.get('http://localhost:8000/api/orders/');
-      
+      const productsResponse = await axios.get('http://localhost:8000/api/products/', {
+        headers: { Authorization: `Bearer ${token}` } // Include token
+      });
+      const categoriesResponse = await axios.get('http://localhost:8000/api/categories/', {
+        headers: { Authorization: `Bearer ${token}` } // Include token
+      });
+      const subcategoriesResponse = await axios.get('http://localhost:8000/api/subcategories/', {
+        headers: { Authorization: `Bearer ${token}` } // Include token
+      });
+      const customersResponse = await axios.get('http://localhost:8000/api/customers/', {
+        headers: { Authorization: `Bearer ${token}` } // Include token
+      });
+      // const ordersResponse = await axios.get('http://localhost:8000/api/orders/', {
+      //   headers: { Authorization: `Bearer ${token}` } // Include token
+      // });
+
       setData({
         totalProducts: productsResponse.data.length,
         totalCategories: categoriesResponse.data.length,
         totalSubcategories: subcategoriesResponse.data.length,
         totalCustomers: customersResponse.data.length,
-        totalOrders: ordersResponse.data.length,
+        // totalOrders: ordersResponse.data.length,
       });
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -45,16 +60,31 @@ const AdminDashboard = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/categories/');
+      const response = await axios.get('http://localhost:8000/api/categories/', {
+        headers: { Authorization: `Bearer ${token}` } // Include token
+      });
       setCategories(response.data);
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
   };
 
+  // const fetchNotifications = async () => {
+  //   try {
+  //     const response = await axios.get('http://localhost:8000/api/notifications/', {
+  //       headers: { Authorization: `Bearer ${token}` } // Include token
+  //     });
+  //     setNotifications(response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching notifications:", error);
+  //   }
+  // };
+
   const handleAddCategory = async () => {
     try {
-      await axios.post('http://localhost:8000/api/categories/', { name: newCategory });
+      await axios.post('http://localhost:8000/api/categories/', { name: newCategory }, {
+        headers: { Authorization: `Bearer ${token}` } // Include token
+      });
       setNewCategory('');
       setMessage('Category added successfully!');
       fetchData(); // Refresh data after adding category
@@ -68,7 +98,9 @@ const AdminDashboard = () => {
 
   const handleAddSubcategory = async () => {
     try {
-      await axios.post('http://localhost:8000/api/subcategories/', { name: newSubcategory, category: selectedCategory });
+      await axios.post('http://localhost:8000/api/subcategories/', { name: newSubcategory, category: selectedCategory }, {
+        headers: { Authorization: `Bearer ${token}` } // Include token
+      });
       setNewSubcategory('');
       setSelectedCategory('');
       setMessage('Subcategory added successfully!');
@@ -81,10 +113,54 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleApproveProduct = async (productId) => {
+    try {
+        await axios.patch(`http://localhost:8000/api/products/${productId}/approve/`, {}, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        setMessage('Product approved successfully!');
+        fetchNotifications(); // Fetch notifications after approving product
+        fetchData(); // Refresh data after approving product
+    } catch (error) {
+        console.error("Error approving product:", error);
+        setMessage('Failed to approve product.');
+    } finally {
+        setTimeout(() => setMessage(''), 3000);
+    }
+};
+
+const handleRejectProduct = async (productId) => {
+    try {
+        await axios.patch(`http://localhost:8000/api/products/${productId}/reject/`, {}, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        setMessage('Product rejected successfully!');
+        fetchNotifications(); // Fetch notifications after rejecting product
+        fetchData(); // Refresh data after rejecting product
+    } catch (error) {
+        console.error("Error rejecting product:", error);
+        setMessage('Failed to reject product.');
+    } finally {
+        setTimeout(() => setMessage(''), 3000);
+    }
+};
+
+const fetchNotifications = async () => {
+    try {
+        const response = await axios.get('http://localhost:8000/api/notifications/', {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        setNotifications(response.data);
+    } catch (error) {
+        console.error("Error fetching notifications:", error);
+    }
+};
+
+
   return (
     <div className="admin-dashboard">
       <AdminNavbar />
-      <br /><br /><br /><br /><br />
+      <br />
       <div className="dashboard-stats">
         <div className="stat-item">
           <h2>Total Products</h2>
@@ -99,12 +175,12 @@ const AdminDashboard = () => {
           <p>{data.totalOrders}</p>
         </div>
       </div>
-      <br /><br /><br /><br />
+      <br /><br />
 
-      {message && <div className="message">{message}</div>}
+      {/* {message && <div className="message">{message}</div>} */}
 
       {/* Form to add new category */}
-      <div className="add-category-form">
+      {/* <div className="add-category-form">
         <input
           type="text"
           placeholder="Enter new category name"
@@ -112,10 +188,10 @@ const AdminDashboard = () => {
           onChange={(e) => setNewCategory(e.target.value)}
         />
         <button onClick={handleAddCategory}>Add Category</button>
-      </div>
+      </div> */}
 
       {/* Form to add new subcategory */}
-      <div className="add-subcategory-form">
+      {/* <div className="add-subcategory-form">
         <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
           <option value="">Select Category</option>
           {categories.map((category) => (
@@ -131,6 +207,20 @@ const AdminDashboard = () => {
           onChange={(e) => setNewSubcategory(e.target.value)}
         />
         <button onClick={handleAddSubcategory}>Add Subcategory</button>
+      </div> */}
+
+      {/* Notification list */}
+      <div className="notifications-list">
+        <h3>Pending Product Approvals</h3>
+        <ul>
+          {notifications.map((notification) => (
+            <li key={notification.id}>
+              {notification.message}
+              <button onClick={() => handleApproveProduct(notification.product.id)}>Approve</button>
+              <button onClick={() => handleRejectProduct(notification.product.id)}>Reject</button>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

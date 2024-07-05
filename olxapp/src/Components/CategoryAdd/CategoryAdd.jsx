@@ -51,7 +51,7 @@ const CategoryAdd = () => {
     <div className="category-add">
       <AdminNavbar />
       <div className="form-container">
-        <h2>Add Category</h2>
+        <h1 className='heading'>Add Category</h1><br />
         <form onSubmit={handleCategorySubmit}>
           <div className="form-group">
             <label>Category Name</label>
@@ -64,19 +64,12 @@ const CategoryAdd = () => {
           </div>
           <button type="submit">Add Category</button>
         </form>
+        <br /><br /><br />
         
-        <h2>Add Subcategory</h2>
+        <h1 className='heading'>Add Subcategory</h1>
+        <br />
         <form onSubmit={handleSubcategorySubmit}>
-          <div className="form-group">
-            <label>Subcategory Name</label>
-            <input
-              type="text"
-              value={subcategoryName}
-              onChange={(e) => setSubcategoryName(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
+        <div className="form-group">
             <label>Select Category</label>
             <select
               value={selectedCategory}
@@ -91,6 +84,16 @@ const CategoryAdd = () => {
               ))}
             </select>
           </div>
+          <div className="form-group">
+            <label>Subcategory Name</label>
+            <input
+              type="text"
+              value={subcategoryName}
+              onChange={(e) => setSubcategoryName(e.target.value)}
+              required
+            />
+          </div>
+          
           <button type="submit">Add Subcategory</button>
         </form>
       </div>

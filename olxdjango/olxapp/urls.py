@@ -13,6 +13,7 @@ router = DefaultRouter()
 router.register(r'categories', CategoryViewSet)
 router.register(r'subcategories', SubcategoryViewSet)
 router.register(r'products', ProductViewSet)
+router.register(r'notifications', NotificationViewSet, basename='notification')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -21,5 +22,7 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/customers/', UserListView.as_view(), name='user-list'),
-     path('api/', include(router.urls)),
+    path('api/', include(router.urls)),
+    # path('notifications/', NotificationListView.as_view(), name='notifications'),
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

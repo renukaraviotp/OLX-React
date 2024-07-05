@@ -1,10 +1,9 @@
-from rest_framework import generics, status
+from rest_framework import generics, status,permissions,viewsets
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from .serializers import *
 from .models import *
-from rest_framework import generics, permissions,viewsets
 from django.contrib.auth import get_user_model
 import logging
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -12,6 +11,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
+from rest_framework.decorators import action
 
 CustomUser = get_user_model()
 
@@ -102,8 +102,13 @@ class ProductViewSet(viewsets.ModelViewSet):
     def perform_destroy(self, instance):
         instance.delete()
         
-class NotificationListView(APIView):
-    def get(self, request):
-        notifications = Notification.objects.all()
-        serializer = NotificationSerializer(notifications, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        
+# class NotificationListView(APIView):
+#     def get(self, request):
+#         notifications = Notification.objects.all()
+#         serializer = NotificationSerializer(notifications, many=True)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class NotificationViewSet(viewsets.ModelViewSet):
+    queryset = Notification.objects.all()
+    serializer_class = NotificationSerializer

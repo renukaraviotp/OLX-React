@@ -1,5 +1,9 @@
 .category-add {
     padding: 20px;
+    background-color: rgb(91, 78, 172);;
+    margin-top: 60px;
+    width: 350px;
+    border-radius: 10px;
   }
   
   .form-container {
@@ -13,6 +17,7 @@
   .form-group label {
     display: block;
     margin-bottom: 5px;
+    color: #fff;
   }
   
   .form-group input,
@@ -20,6 +25,7 @@
     width: 100%;
     padding: 8px;
     box-sizing: border-box;
+    border-radius: 10px;
   }
   
   button {
@@ -32,5 +38,10 @@
   
   button:hover {
     background-color: #0056b3;
+    color: #fff;
+  }
+
+  .heading{
+    color: #fff;
   }
   

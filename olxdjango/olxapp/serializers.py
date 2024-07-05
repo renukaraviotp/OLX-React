@@ -67,5 +67,5 @@ class ProductSerializer(serializers.ModelSerializer):
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
-        fields = ['id', 'message', 'created_at']
+        fields = '__all__'
 
