@@ -92,15 +92,34 @@ class ProductViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            product = serializer.save()
+            Notification.objects.create(
+                message=f"New product '{product.name}' awaiting approval.",
+                product=product
+            )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def perform_update(self, serializer):
-        serializer.save()
+    @action(detail=True, methods=['patch'], permission_classes=[IsAuthenticated])
+    def approve(self, request, pk=None):
+        product = self.get_object()
+        print(product,'product')
+        product.is_approved = True
+        print(product.is_approved,'dhfh')
+        product.save()
+        print('approved')
+        return Response({'status': 'Product approved'}, status=status.HTTP_200_OK)
 
-    def perform_destroy(self, instance):
-        instance.delete()
+    @action(detail=True, methods=['patch'], permission_classes=[IsAuthenticated])
+    def reject(self, request, pk=None):
+        product = self.get_object()
+        product.delete()
+        return Response({'status': 'Product rejected'}, status=status.HTTP_200_OK)
+
+class NotificationViewSet(viewsets.ModelViewSet):
+    queryset = Notification.objects.all()
+    serializer_class = NotificationSerializer
+    permission_classes = [IsAuthenticated]
         
         
 # class NotificationListView(APIView):
@@ -109,6 +128,6 @@ class ProductViewSet(viewsets.ModelViewSet):
 #         serializer = NotificationSerializer(notifications, many=True)
 #         return Response(serializer.data, status=status.HTTP_200_OK)
 
-class NotificationViewSet(viewsets.ModelViewSet):
-    queryset = Notification.objects.all()
-    serializer_class = NotificationSerializer
+# class NotificationViewSet(viewsets.ModelViewSet):
+#     queryset = Notification.objects.all()
+#     serializer_class = NotificationSerializer

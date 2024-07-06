@@ -62,7 +62,7 @@ class SubcategorySerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id', 'name', 'description', 'price', 'category', 'subcategory', 'images']
+        fields = ['id', 'name', 'description', 'price', 'category', 'subcategory', 'images', 'is_approved']
 
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:

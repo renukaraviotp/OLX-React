@@ -1,3 +1,4 @@
+// AddProduct.js
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AddProduct.css';
@@ -8,7 +9,7 @@ const AddProduct = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    name: '', // Changed from title to name to match the model field
+    name: '',
     description: '',
     price: '',
     category: '',
@@ -73,7 +74,7 @@ const AddProduct = () => {
     }
 
     const form = new FormData();
-    form.append('name', formData.name); // Changed from title to name
+    form.append('name', formData.name);
     form.append('description', formData.description);
     form.append('price', formData.price);
     form.append('category', formData.category);
@@ -111,7 +112,7 @@ const AddProduct = () => {
           Title:
           <input
             type="text"
-            name="name" // Changed from title to name
+            name="name"
             value={formData.name}
             onChange={handleChange}
             required

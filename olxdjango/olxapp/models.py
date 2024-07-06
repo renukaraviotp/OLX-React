@@ -33,6 +33,7 @@ class Product(models.Model):
     description = models.TextField(null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     images = models.ImageField(upload_to='product_images/', blank=True, null=True)
+    is_approved = models.BooleanField(default=False)  
 
     def __str__(self):
         return self.name
@@ -40,7 +41,7 @@ class Product(models.Model):
 class Notification(models.Model):
     message = models.CharField(max_length=255, null=True)
     created_at = models.DateTimeField(default=timezone.now)
-    product = models.ForeignKey('Product', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.message
