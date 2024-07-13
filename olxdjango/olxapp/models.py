@@ -42,6 +42,7 @@ class Notification(models.Model):
     message = models.CharField(max_length=255, null=True)
     created_at = models.DateTimeField(default=timezone.now)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    is_handled = models.BooleanField(default=False)
 
     def __str__(self):
         return self.message

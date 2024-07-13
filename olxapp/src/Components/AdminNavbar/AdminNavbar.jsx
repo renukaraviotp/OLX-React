@@ -10,11 +10,11 @@ const AdminSidebar = () => {
       </div>
       <ul>
         <li><Link to="/admin-dashboard">Dashboard</Link></li><br />
-        <li><Link to="/admin-products">Products</Link></li><br />
         <li><Link to="/admin-categories">Categories</Link></li><br />
         <li><Link to="/admin-customers">Customers</Link></li><br />
         <li><Link to="/admin-orders">Orders</Link></li><br />
-        <li><Link to="/admin-notifications">Notifications</Link></li>
+        <li><Link to="/admin-notifications">Notifications</Link></li><br />
+        <li><Link to="/admin/products">Products</Link></li>
       </ul>
     </div>
   );

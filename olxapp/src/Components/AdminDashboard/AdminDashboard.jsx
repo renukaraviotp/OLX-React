@@ -32,7 +32,7 @@ const AdminDashboard = () => {
   const fetchData = async () => {
     try {
       const productsResponse = await axios.get('http://localhost:8000/api/products/', {
-        headers: { Authorization: `Bearer ${token}` } ,
+        headers: { Authorization: `Bearer ${token}` },
       });
       const categoriesResponse = await axios.get('http://localhost:8000/api/categories/', {
         headers: { Authorization: `Bearer ${token}` } ,
@@ -59,36 +59,6 @@ const AdminDashboard = () => {
     }
   };
 
-  // const fetchData = async () => {
-  //   try {
-  //     const productsResponse = await axios.get('http://localhost:8000/api/products/', {
-  //       headers: { Authorization: `Bearer ${token}` },
-  //     });
-  //     const categoriesResponse = await axios.get('http://localhost:8000/api/categories/', {
-  //       headers: { Authorization: `Bearer ${token}` },
-  //     });
-  //     const subcategoriesResponse = await axios.get('http://localhost:8000/api/subcategories/', {
-  //       headers: { Authorization: `Bearer ${token}` },
-  //     });
-  //     const customersResponse = await axios.get('http://localhost:8000/api/customers/', {
-  //       headers: { Authorization: `Bearer ${token}` },
-  //     });
-  //     const ordersResponse = await axios.get('http://localhost:8000/api/orders/', {
-  //       headers: { Authorization: `Bearer ${token}` },
-  //     });
-
-  //     setData({
-  //       totalProducts: productsResponse.data.length,
-  //       totalCategories: categoriesResponse.data.length,
-  //       totalSubcategories: subcategoriesResponse.data.length,
-  //       totalCustomers: customersResponse.data.length,
-  //       totalOrders: ordersResponse.data.length,
-  //     });
-  //   } catch (error) {
-  //     console.error('Error fetching data:', error);
-  //   }
-  // };
-
   const fetchCategories = async () => {
     try {
       const response = await axios.get('http://localhost:8000/api/categories/', {
@@ -100,7 +70,7 @@ const AdminDashboard = () => {
     }
   };
 
-  const fetchNotifications = async () => {
+  const fetchNotifications = async () => { 
     try {
       const response = await axios.get('http://localhost:8000/api/notifications/', {
         headers: { Authorization: `Bearer ${token}` },
@@ -111,19 +81,6 @@ const AdminDashboard = () => {
     }
   };
 
-  // const handleAddCategory = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.post('http://localhost:8000/api/categories/', { name: message }, {
-  //       headers: { Authorization: `Bearer ${token}` },
-  //     });
-  //     setCategories([...categories, response.data]);
-  //     setMessage('');
-  //   } catch (error) {
-  //     console.error('Error adding category:', error);
-  //   }
-  // };
-
   const handleApproveProduct = async (productId) => {
     if (!productId) {
       console.error('Product ID is undefined');
@@ -133,14 +90,14 @@ const AdminDashboard = () => {
       const response = await axios.patch(`http://localhost:8000/api/products/${productId}/approve/`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log(response);
       setApprovalMessage(response.data.status || 'Product approved successfully.');
-      console.log(setApprovalMessage(response.data.status || 'Product approved successfully.'));
-      fetchNotifications(); // Refresh the notifications after approving the product
+      // Remove the approved product's notification from the state
+      setNotifications(notifications.filter(notification => notification.product !== productId));
     } catch (error) {
-      console.error(error);
+      console.error('Error approving product:', error);
       setApprovalMessage('Failed to approve product.');
     } finally {
+      // Clear approval message after a delay
       setTimeout(() => setApprovalMessage(''), 3000);
     }
   };
@@ -187,18 +144,6 @@ const AdminDashboard = () => {
           ))}
         </ul>
       </div>
-
-      {/* <form onSubmit={handleAddCategory}>
-        <label>
-          Add New Category:
-          <input
-            type="text"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-        </label>
-        <button type="submit">Add Category</button>
-      </form> */}
     </div>
   );
 };

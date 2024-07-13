@@ -31,7 +31,7 @@ class RegisterView(generics.CreateAPIView):
 
 class LoginView(generics.GenericAPIView):
     serializer_class = LoginSerializer
-
+ 
     def post(self, request, *args, **kwargs):
         print("Incoming login data:", request.data)
         serializer = self.get_serializer(data=request.data)
@@ -119,7 +119,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 class NotificationViewSet(viewsets.ModelViewSet):
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated] 
         
         
 # class NotificationListView(APIView):
@@ -131,3 +131,7 @@ class NotificationViewSet(viewsets.ModelViewSet):
 # class NotificationViewSet(viewsets.ModelViewSet):
 #     queryset = Notification.objects.all()
 #     serializer_class = NotificationSerializer
+
+class ApprovedProductListView(generics.ListAPIView):
+    queryset = Product.objects.filter(is_approved=True)
+    serializer_class = ProductSerializer

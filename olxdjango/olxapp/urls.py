@@ -24,5 +24,6 @@ urlpatterns = [
     path('api/customers/', UserListView.as_view(), name='user-list'),
     path('api/', include(router.urls)),
     # path('notifications/', NotificationListView.as_view(), name='notifications'),
+    path('api/approved-products/', ApprovedProductListView.as_view(), name='approved-products'),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
