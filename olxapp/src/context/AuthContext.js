@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
+import axios from 'axios'; // Assuming you use axios for API calls
 
 const AuthContext = createContext();
 
@@ -6,6 +7,8 @@ const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState(null);
   const [refreshToken, setRefreshToken] = useState(null);
+  const [user, setUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false); // New state for admin
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -14,6 +17,7 @@ const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
       setToken(token);
       setRefreshToken(refreshToken);
+      fetchUserData(token);
     }
   }, []);
 
@@ -23,6 +27,7 @@ const AuthProvider = ({ children }) => {
     setIsAuthenticated(true);
     setToken(token);
     setRefreshToken(refreshToken);
+    fetchUserData(token);
   };
 
   const logout = () => {
@@ -31,10 +36,25 @@ const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
     setToken(null);
     setRefreshToken(null);
+    setUser(null);
+    setIsAdmin(false); // Clear admin state on logout
   };
 
+  const fetchUserData = async (accessToken) => {
+    try {
+        const response = await axios.get('http://localhost:8000/api/users/me/', {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        throw new Error('Failed to fetch user data: ' + error.message);
+    }
+};
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, token, refreshToken, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, token, refreshToken, login, logout, user, isAdmin }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,31 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import land from './land.jpeg';
-import ProductCard from './ProductCard';
 
 const Home = () => {
-    const products = [
-        {
-            id: 1,
-            name: 'Product 1',
-            price: 99.99,
-            description: 'This is a great product.',
-            image: 'https://via.placeholder.com/300x200',
-        },
-        {
-            id: 2,
-            name: 'Product 2',
-            price: 149.99,
-            description: 'This is another great product.',
-            image: 'https://via.placeholder.com/300x200',
-        },
-        // Add more products as needed
-    ];
-
     const imageStyle = {
         width: '100%',
         height: 'auto',
         display: 'block',
+        marginTop:'50px',
     };
 
     const aboutUsContainerStyle = {
@@ -40,13 +21,6 @@ const Home = () => {
         fontSize: '50px',
         marginBottom: '10px',
         textAlign: 'center',
-        // backgroundColor: '#fff',
-    };
-    const productHeadingStyle = {
-        fontSize: '50px',
-        marginBottom: '10px',
-        textAlign: 'center',
-        backgroundColor: '#fff',
     };
 
     const aboutUsTextStyle = {
@@ -63,14 +37,6 @@ const Home = () => {
 
     const aboutUsListItemStyle = {
         marginBottom: '10px',
-    };
-
-    const productsContainerStyle = {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        padding: '20px',
-        backgroundColor: '#fff',
     };
 
     const footerStyle = {
@@ -109,12 +75,6 @@ const Home = () => {
                 <p style={aboutUsTextStyle}>
                     Thank you for being part of the OLX community. We hope you enjoy using our platform as much as we enjoy offering it to you.
                 </p>
-            </div>
-            <h2 style={productHeadingStyle}>Products</h2>
-            <div style={productsContainerStyle}>
-                {products.map(product => (
-                    <ProductCard key={product.id} product={product} />
-                ))}
             </div>
             <footer style={footerStyle}>
                 <div>

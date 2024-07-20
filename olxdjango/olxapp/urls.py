@@ -14,6 +14,7 @@ router.register(r'categories', CategoryViewSet)
 router.register(r'subcategories', SubcategoryViewSet)
 router.register(r'products', ProductViewSet)
 router.register(r'notifications', NotificationViewSet, basename='notification')
+router.register(r'approved-products', ApprovedProductViewSet, basename='approved-product')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,6 +25,8 @@ urlpatterns = [
     path('api/customers/', UserListView.as_view(), name='user-list'),
     path('api/', include(router.urls)),
     # path('notifications/', NotificationListView.as_view(), name='notifications'),
-    path('api/approved-products/', ApprovedProductListView.as_view(), name='approved-products'),
+    # path('api/approved-products/', ApprovedProductListView.as_view(), name='approved-products'),
+    path('api/users/me/', CurrentUserAPIView.as_view(), name='current-user'),
+    # path('api/products/', ProductView.as_view(), name='product-list'),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

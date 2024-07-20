@@ -7,11 +7,13 @@ from .models import *
 from django.contrib.auth import get_user_model
 import logging
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,AllowAny
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from rest_framework.decorators import action
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 CustomUser = get_user_model()
 
@@ -30,6 +32,7 @@ class RegisterView(generics.CreateAPIView):
         }, status=status.HTTP_201_CREATED)
 
 class LoginView(generics.GenericAPIView):
+    permission_classes = [AllowAny]
     serializer_class = LoginSerializer
  
     def post(self, request, *args, **kwargs):
@@ -132,6 +135,23 @@ class NotificationViewSet(viewsets.ModelViewSet):
 #     queryset = Notification.objects.all()
 #     serializer_class = NotificationSerializer
 
-class ApprovedProductListView(generics.ListAPIView):
+class ApprovedProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.filter(is_approved=True)
     serializer_class = ProductSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    
+class CurrentUserAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
+    
+# class ProductView(APIView):
+#     authentication_classes = [TokenAuthentication]
+#     permission_classes = [IsAuthenticated]
+
+#     def get(self, request, *args, **kwargs):
+#         products = Product.objects.filter(is_approved=True)
+#         serializer = HomeSerializer(products, many=True, context={'request': request})
+#         return Response(serializer.data, status=status.HTTP_200_OK)

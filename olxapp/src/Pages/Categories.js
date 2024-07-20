@@ -1,53 +1,46 @@
-import React from 'react';
-import Arrow from './Arrow';
-
+import React, { useState, useEffect, useContext } from 'react';
+import { CartContext } from '../context/CartContext';
 import './Categories.css';
 
-function Banner() {
-  const footerStyle = {
-    marginTop: '100px',
-    backgroundColor: '#333',
-    color: 'white',
-    textAlign: 'center',
-    padding: '20px',
-};
+const Categories = () => {
+  const [approvedProducts, setApprovedProducts] = useState([]);
+  const { addToCart } = useContext(CartContext);
 
-const footerTextStyle = {
-    margin: 0,
-};
+  useEffect(() => {
+    fetchApprovedProducts();
+  }, []);
+
+  const fetchApprovedProducts = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/approved-products/');
+      const data = await response.json();
+      setApprovedProducts(data);
+    } catch (error) {
+      console.error('Error fetching approved products:', error);
+    }
+  };
+
+  const handleAddToCart = (product) => {
+    addToCart(product);
+  };
+
   return (
-    <div className="bannerParentDiv">
-      <div className="bannerChildDiv">
-        <div className="menuBar">
-          <div className="categoryMenu">
-            <span>ALL CATEGORIES</span>
-            <Arrow></Arrow> 
+    <div className="products">
+      {approvedProducts.length > 0 ? (
+        approvedProducts.map((product) => (
+          <div key={product.id} className="product">
+            <img src={product.images} alt={product.name} />
+            <h3>{product.name}</h3>
+            <p>{product.description}</p>
+            <p>${product.price}</p>
+            <button onClick={() => handleAddToCart(product)}>Add to Cart</button>
           </div>
-          <div className="otherQuickOptions">
-            <span>Cars</span>
-            <span>Motorcy...</span>
-            <span>Mobile Ph...</span>
-            <span>For Sale:Houses & Apart...</span>
-            <span>Scoot...</span>
-            <span>Commercial & Other Ve...</span>
-            <span>For Rent: House & Apart...</span>
-          </div>
-        </div>
-        <div className="banner">
-          <img
-            src="../../../Images/banner copy.png"
-            alt=""
-          />
-        </div>
-      </div><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
-      <footer style={footerStyle}>
-                <div>
-                    <p style={footerTextStyle}>&copy; 2024 Created by Renuka. All rights reserved.</p>
-                </div>
-      </footer>
-      
+        ))
+      ) : (
+        <p>No approved products available</p>
+      )}
     </div>
   );
-}
+};
 
-export default Banner;
+export default Categories;

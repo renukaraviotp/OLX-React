@@ -64,8 +64,6 @@ const CategoryAdd = () => {
           </div>
           <button type="submit">Add Category</button>
         </form>
-        <br /><br /><br />
-        
         <h1 className='heading'>Add Subcategory</h1>
         <br />
         <form onSubmit={handleSubcategorySubmit}>
