@@ -140,3 +140,22 @@ main {
 .navbar-links.open {
   display: flex;
 }
+
+@media (max-width: 768px) {
+  .navbar-search {
+    display: none;
+  }
+
+  .navbar-links {
+    display: none;
+    flex-direction: column;
+  }
+
+  .navbar-links.open {
+    display: flex;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}

@@ -15,6 +15,10 @@ import AdminUserList from './Components/AdminUserList/AdminUserList';
 import CategoryAdd from './Components/CategoryAdd/CategoryAdd';
 import AdminNotifications from './Components/AdminNotifications/AdminNotifications';
 import ApprovedProducts from './Components/ApprovedProducts/ApprovedProducts';
+import CartPage from './Pages/CartPage';
+import CheckoutPage from './Pages/CheckoutPage';
+import DummyPaymentGateway from './Pages/DummyPaymentGateway';
+import OrderConfirmation from './Pages/OrderConfirmation';
 
 const App = () => {
   return (
@@ -35,6 +39,10 @@ const App = () => {
             <Route path="/admin-categories" element={<CategoryAdd />} />
             <Route path="/admin-notifications" element={<AdminNotifications />} />
             <Route path="/admin/products" element={<ApprovedProducts />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/dummy-payment-gateway" element={<DummyPaymentGateway />} /> {/* Add DummyPaymentGateway route */}
+            <Route path="/order-confirmation" element={<OrderConfirmation />} /> {/* Add OrderConfirmation route */}
           </Routes>
         </Router>
       </CartProvider>

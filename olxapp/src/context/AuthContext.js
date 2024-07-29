@@ -42,16 +42,19 @@ const AuthProvider = ({ children }) => {
 
   const fetchUserData = async (accessToken) => {
     try {
-        const response = await axios.get('http://localhost:8000/api/users/me/', {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        });
-        return response.data;
+      const response = await axios.get('http://localhost:8000/api/users/me/', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      });
+      const userData = response.data;
+      setUser(userData);
+      setIsAdmin(userData.isAdmin); // Assuming the API response includes an `isAdmin` field
     } catch (error) {
-        throw new Error('Failed to fetch user data: ' + error.message);
+      console.error('Failed to fetch user data:', error.message);
+      logout();
     }
-};
+  };
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, token, refreshToken, login, logout, user, isAdmin }}>
